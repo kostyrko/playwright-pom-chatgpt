@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "sandbox repo for experiments focused on chatgpt usage in test automation using playwright and chatgpt test",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "report": "npx playwright show-report",
+    "test-headed" : "npx playwright test --headed",
+    "test-debug" : "npx playwright test --debug",
+    "test-ui" : "npx playwright test --ui",
+    "test-generator" : "npx playwright codegen",
+    "test-generator-saucedemo" : "npx playwright codegen https://www.saucedemo.com/"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
