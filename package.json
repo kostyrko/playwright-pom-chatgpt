@@ -6,16 +6,19 @@
   "scripts": {
     "test": "npx playwright test",
     "report": "npx playwright show-report",
-    "test-headed" : "npx playwright test --headed",
-    "test-debug" : "npx playwright test --debug",
-    "test-ui" : "npx playwright test --ui",
-    "test-generator" : "npx playwright codegen",
-    "test-generator-saucedemo" : "npx playwright codegen https://www.saucedemo.com/"
+    "test-headed": "npx playwright test --headed",
+    "test-debug": "npx playwright test --debug",
+    "test-ui": "npx playwright test --ui",
+    "test-generator": "npx playwright codegen",
+    "test-generator-saucedemo": "npx playwright codegen https://www.saucedemo.com/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.32.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
   }
 }
