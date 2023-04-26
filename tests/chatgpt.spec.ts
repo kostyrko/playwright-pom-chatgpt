@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { InventoryPage } from './InventoryPage';
+import { InventoryPage } from './pageObjects/InventoryPage';
 
 test.describe('Inventory Page', () => {
   let page: InventoryPage;
@@ -7,14 +7,14 @@ test.describe('Inventory Page', () => {
   test.beforeEach(async ({ browser }) => {
     const context = await browser.newContext();
     page = new InventoryPage(await context.newPage());
-    await page.goto('https://www.saucedemo.com/inventory.html');
+    await page.goto();
   });
 
   test('Add and remove item from cart', async () => {
     await page.addToCartBackpack();
     await page.expectCartItemCount(1);
     await page.removeBackpackFromCart();
-    await page.expectCartItemCount(0);
+    await page.expectEmptyCart()
   });
 
   test('Sort products by Z-A', async () => {
@@ -49,9 +49,7 @@ test.describe('Inventory Page', () => {
     await page.clickCartBadge();
     await page.expectCartItemCount(1);
     await page.removeFleeceJacketFromCart();
-    await page.expectCartItemCount(0);
-    await page.openCart();
-    await page.expectCartItemCount(0);
+    await page.expectEmptyCart()
   });
 
   test.afterEach(async () => {

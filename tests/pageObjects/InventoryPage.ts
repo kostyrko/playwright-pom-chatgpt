@@ -1,10 +1,19 @@
-import { Page } from 'playwright';
+import { test, expect, Page } from '@playwright/test';
+
 
 export class InventoryPage {
   private page: Page;
 
   constructor(page: Page) {
     this.page = page;
+  }
+
+  async goto() {
+    await this.page.goto('/inventory.html');
+  }
+
+  async close() {
+    await this.page.close();
   }
 
   async addToCartBackpack() {
@@ -55,13 +64,6 @@ export class InventoryPage {
     await this.page.locator('a').filter({ hasText: '1' }).click();
   }
 
-  async clickBookName(name: string) {
-    await test.step(`I can click the book using the name: ${name}`, async () => {
-      await expect(this.page.locator(`text=${name} >> nth=0`),`Can not find the Book Name ${name}- did the locator change?`).toBeVisible();
-      await this.page.locator(`text=${name} >> nth=0`).click();
-    });
-  }
-
   async expectCartItemCount(count: number) {
     await test.step(`Expect cart item count to be ${count}`, async () => {
       const badgeText = await this.page.locator('#shopping_cart_container .shopping_cart_badge').textContent();
@@ -69,15 +71,8 @@ export class InventoryPage {
     });
   }
 
-  async expectCartTotal(total: number) {
-    await test.step(`Expect cart total to be $${total}`, async () => {
-      const totalText = await this.page.locator('.summary_total_label').textContent();
-      await expect(parseFloat(totalText.substring(13))).toEqual(total);
-    });
-  }
-
   async getProductNames() {
-    const elements = await this.page.locator('.inventory_item_name');
+    const elements = await this.page.locator('.inventory_item_name').all();
     const names = [];
     for (const element of elements) {
       names.push(await element.textContent());
@@ -86,12 +81,17 @@ export class InventoryPage {
   }
   
   async getProductPrices() {
-    const elements = await this.page.locator('.inventory_item_price');
+    const elements = await this.page.locator('.inventory_item_price').all();
     const prices = [];
     for (const element of elements) {
-      prices.push(parseFloat(await element.textContent().substring(1)));
+      prices.push(parseFloat(await element.allInnerTexts()));
     }
     return prices;
   }
-  
+
+  async expectEmptyCart() {
+    await test.step(`Expect cart to be empty`, async () => {
+      await expect(this.page.locator('#shopping_cart_container .shopping_cart_badge')).toHaveCount(0);
+    });
+  }
 }
