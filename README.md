@@ -5,7 +5,8 @@ experiments focused on chatgpt usage in test automation using playwright, POM an
 conditions: playwright Codgen + saucedemo.com
 
 initial prompt
-```Please create a new class for inventoryPage, create the relevant functions for the code below, use javascript, create playwright tests based on created class using page object model
+```
+Please create a new class for inventoryPage, create the relevant functions for the code below, use javascript, create playwright tests based on created class using page object model
 
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
   await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
